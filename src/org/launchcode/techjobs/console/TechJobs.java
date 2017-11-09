@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -114,13 +115,14 @@ public class TechJobs {
         if (someJobs.size() != 0) {
 
             for (HashMap<String, String> job : someJobs) {
-                System.out.println("*****\n" +
-                        "position type: " + job.get("position type") + "\n" +
-                        "name: " + job.get("name") + "\n" +
-                        "employer: " + job.get("employer") + "\n" +
-                        "location: " + job.get("location") + "\n" +
-                        "core competency: " + job.get("core competency") + "\n" +
-                        "*****\n\n");
+                System.out.println("*****");
+                Iterator it = job.entrySet().iterator();
+                while (it.hasNext()) {
+                    HashMap.Entry pair = (HashMap.Entry)it.next();
+                    System.out.println(pair.getKey() + ": " + pair.getValue());
+                    it.remove();  // avoids ConcurrentModificationException
+                }
+                System.out.println("*****\n");
             }
         } else {
             System.out.println("No matches.  Please alter your search criteria and try again.");
