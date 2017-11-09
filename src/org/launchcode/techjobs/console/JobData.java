@@ -54,6 +54,30 @@ public class JobData {
         return allJobs;
     }
 
+    /** Returns results of search in all of the columns.
+     *
+     * @param term Value of the field to search for
+     * @return List of all jobs matching the criteria
+     * */
+    public static ArrayList<HashMap<String, String>> findByValue(String term) {
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+
+            String aValue = new String(String.valueOf(row));
+
+            if (aValue.contains(term)) {
+                jobs.add(row);
+            }
+        }
+
+        return jobs;
+    }
+
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
@@ -74,7 +98,7 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = new String(row.get(column));
 
             if (aValue.contains(value)) {
                 jobs.add(row);
